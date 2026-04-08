@@ -1,6 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { Signup } from '../Pages/Signup';
+import { Signup } from '../../Pages/Educator/Signup';
 import { signupData } from '../../test-data/testdata';
 
 test('Signup Flow Test', async ({ page }) => {

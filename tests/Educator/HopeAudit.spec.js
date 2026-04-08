@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { HopeAudit } from '../Pages/HopeAudit';
+import { HopeAudit } from '../../Pages/Educator/HopeAudit';
 import { hopeaudituser, hopeAuditQuestions } from '../../test-data/testdata';
 
 test('Hope Audit Full Flow', async ({ page }) => {
