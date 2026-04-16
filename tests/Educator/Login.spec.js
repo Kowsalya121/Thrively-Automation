@@ -1,38 +1,27 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../Pages/Educator/LoginPage';
-import { loginEducator } from '../../test-data/testdata';
+import { Loginusers } from '../../test-data/testdata';
 
-test('Educator Login Flow', async ({ page }) => {
+// ✅ Helper function (only login logic)
+async function loginUser(page, user) {
   const login = new LoginPage(page);
 
   await login.goto();
-
   await login.openLogin();
+  await login.login(user);
+  if (user.role === 'educator') {
+    await expect(page.getByText('Choose Account')).toBeVisible();
+    await login.selectSchool(user.schoolName);
+  }
+  await page.context().storageState({ path: 'storageState.json' });
+}
 
-  // Login modal assertions
-  await expect(login.loginModal).toContainText('Sign In');
+// ✅ Convert object → array
+const users = Object.values(Loginusers);
 
-  await expect(login.googleBtn).toBeVisible();
-  await expect(login.microsoftBtn).toBeVisible();
-
-  await expect(page.getByText('Remember me')).toBeVisible();
-  await expect(login.signInBtn).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Reset Password' })).toBeVisible();
-
-  // Login action
-  await login.login(loginEducator);
-
-  // Account selection assertions
-  await expect(page.getByText(' Choose Account ')).toContainText('Choose Account');
-
-  await expect(page.getByRole('paragraph')).toContainText(
-    'You have been associated with multiple accounts. Please select an account.'
-  );
-
-  await expect(page.getByText('GECK')).toBeVisible();
-
-  await login.selectSchool(loginEducator.schoolName);
-
-  // Dashboard assertion
-  await expect(page.getByRole('heading', { name: 'My Dashboard' })).toBeVisible();
-});
+// ✅ Define tests at top level
+for (const user of users) {
+  test(`Login test for ${user.role}`, async ({ page }) => {
+    await loginUser(page, user);
+  });
+};

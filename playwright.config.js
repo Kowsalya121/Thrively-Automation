@@ -22,6 +22,11 @@ export default {
       screenshot: 'only-on-failure',
       trace: 'retain-on-failure'
     }
+  ,
+  globalSetup: './auth.setup.js',
+  use: {
+    storageState: 'storageState.json',
+  },
   },
 
   reporter: [['html', { open: 'never' }]],

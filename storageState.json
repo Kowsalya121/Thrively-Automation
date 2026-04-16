@@ -1,0 +1,214 @@
+{
+  "cookies": [
+    {
+      "name": "rack.session",
+      "value": "b47e5fafe48464dabba641764d90e669ba380a101ce9b07fd0a96d4fc48f9ce9",
+      "domain": "qa.thrively.com",
+      "path": "/",
+      "expires": 1776419919.461823,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_cfuvid",
+      "value": "lSQQwzu7Xu1xfB6mpgKX18__UyqBckBPylHlrnaVUpg-1776333517.1841867-1.0.1.1-_AIn2uaqVYHxL9nEBHt6.JhugP3UPNowiBa88lhTQWM",
+      "domain": ".vimeo.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__Secure-YNID",
+      "value": "17.YT=q5Z8FQwn2APtZjiAl_Gw5Noz_LZrliSTl_SJ7tV31qz2IaYJ2ye7lG-sjjFV2lF9BQNwiMWdt8FDMidz1Ll3b9qeAIQyw9pq1EDoAyGhWcOgL_SgOv76Ui5bUPrDBRNUpJN5Jwwj6Hxsk06gxIEWJ7yk2eGXUyjR9ODluiW6ZBFTX9OmVxHb9nnMkBxEZH3ZNmwe-LxEoCvoJSVfwXb_nrcwGjC4GjoauVKOmNSj9yXO2LZwj-Vi1qVhR6aLixA301ibZM95QPqtD8hZh921YlGaZnqsuNqkf8a1gW5sni0__WhcWN2lDvoNDn6gBNMMoXKvT8hfHf0IvdMKqos3LQ",
+      "domain": ".youtube.com",
+      "path": "/",
+      "expires": 1791885518.323635,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://thrively.com",
+      "_crHasCrossSiteAncestor": true
+    },
+    {
+      "name": "YSC",
+      "value": "AtQtiSN9hw4",
+      "domain": ".youtube.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://thrively.com",
+      "_crHasCrossSiteAncestor": true
+    },
+    {
+      "name": "VISITOR_INFO1_LIVE",
+      "value": "eacQImz9cLY",
+      "domain": ".youtube.com",
+      "path": "/",
+      "expires": 1791885518.323684,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://thrively.com",
+      "_crHasCrossSiteAncestor": true
+    },
+    {
+      "name": "VISITOR_PRIVACY_METADATA",
+      "value": "CgJJThIEGgAgHQ%3D%3D",
+      "domain": ".youtube.com",
+      "path": "/",
+      "expires": 1791885518.323694,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://thrively.com",
+      "_crHasCrossSiteAncestor": true
+    },
+    {
+      "name": "__Secure-ROLLOUT_TOKEN",
+      "value": "CMyZtf6B5O_3yQEQo-Lygo7ykwMYo-Lygo7ykwM%3D",
+      "domain": ".youtube.com",
+      "path": "/",
+      "expires": 1791885518.323704,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://thrively.com",
+      "_crHasCrossSiteAncestor": true
+    },
+    {
+      "name": "CLID",
+      "value": "e9d2bf3f0436416eb453593e35d054d5.20260416.20270416",
+      "domain": "www.clarity.ms",
+      "path": "/",
+      "expires": 1807869518.365152,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ga",
+      "value": "GA1.1.1868727017.1776333518",
+      "domain": ".thrively.com",
+      "path": "/",
+      "expires": 1810893518.458252,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_clck",
+      "value": "1k9fnzr%5E2%5Eg59%5E0%5E2297",
+      "domain": ".thrively.com",
+      "path": "/",
+      "expires": 1807869518,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "LS_CSRF_TOKEN",
+      "value": "2eeb0555-e13c-42dd-bcc6-08c5e1786d7f",
+      "domain": "salesiq.zoho.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_clsk",
+      "value": "11koz69%5E1776333520146%5E1%5E1%5Ev.clarity.ms%2Fcollect",
+      "domain": ".thrively.com",
+      "path": "/",
+      "expires": 1776419920,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_NVPZGS7PEV",
+      "value": "GS2.1.s1776333518$o1$g0$t1776333520$j58$l0$h0",
+      "domain": ".thrively.com",
+      "path": "/",
+      "expires": 1810893520.995325,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "SM",
+      "value": "T",
+      "domain": ".c.clarity.ms",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "MUID",
+      "value": "38C7D788EC6069E72288C0B5E860672E",
+      "domain": ".clarity.ms",
+      "path": "/",
+      "expires": 1810029521.118579,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "MUID",
+      "value": "225DECEBAE6163580BCFFBD6AF0C62C6",
+      "domain": ".bing.com",
+      "path": "/",
+      "expires": 1810029521.412795,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "MR",
+      "value": "0",
+      "domain": ".c.bing.com",
+      "path": "/",
+      "expires": 1776938321.412848,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "SRM_B",
+      "value": "225DECEBAE6163580BCFFBD6AF0C62C6",
+      "domain": ".c.bing.com",
+      "path": "/",
+      "expires": 1810029521.41287,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://qa.thrively.com",
+      "localStorage": [
+        {
+          "name": "siqlsdb",
+          "value": "{\"ZLSLANG445cd38c2ba0037fa6f837e0a7b9c6972d5cf0380c9361866ac2750858842c96\":\"en\"}"
+        }
+      ]
+    },
+    {
+      "origin": "https://www.google.com",
+      "localStorage": [
+        {
+          "name": "rc::a",
+          "value": "MXdidWs2dTF0MzRqMjg="
+        }
+      ]
+    }
+  ]
+}

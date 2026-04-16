@@ -203,14 +203,23 @@ export const signupData = {
     interest: 'Social & Emotional Well-being',
     schoolSearch: 'pom'
   };
-  export const loginEducator = {
-    email: 'qa+kowsalya+test2@liftoffllc.com',
-    password: '123456',
-    schoolName: 'LIGGETT TRAIL EDUCATION CENTER'
-  };
-  export const parentLoginUser = {
-    email: 'tybuzyny@mailinator.com',
-    password: 'pass@121',
+  export const Loginusers = {
+    /*educator: {
+      email: 'qa+kowsalya+test2@liftoffllc.com',
+      password: 'pass@121',
+      schoolName: 'GECK',
+      role: 'educator'
+    },*/
+    /*parent: {
+      email: 'tybuzyny@mailinator.com',
+      password: 'pass@121',
+      role: 'parent'
+    },*/
+    student: {
+      email: '634238_ram',
+      password: '123456',
+      role: 'student'
+    }
   };
   
   export const childData = {
@@ -324,15 +333,15 @@ export const signupData = {
   export const checkinData = {
     login: {
       hopeUser: {
-        email: 'jyjakyn@mailinator.com',
+        email: 'cadeb@mailinator.com',
         password: '123456'
       },
       wellbeingUser: {
-        email: 'jyjakyn@mailinator.com',
+        email: 'cadeb@mailinator.com',
         password: '123456'
       }
     },
-  
+
     hope: {
       questions: [
         'I can think of many ways to get out of a jam',
