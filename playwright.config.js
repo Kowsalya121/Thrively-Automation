@@ -1,32 +1,24 @@
 import 'dotenv/config';
 
-/** @type {import('@playwright/test').PlaywrightTestConfig} */
 export default {
   testDir: './tests',
   timeout: 50000,
 
   use: {
-    baseURL: process.env.BASE_URL, // ✅ added from .env
+    baseURL: process.env.BASE_URL,
     headless: false,
-  
-  },
-  use: {
-    headless: false,
-    launchOptions: {
-      devtools: false
+
+    screenshot: 'only-on-failure',
+    trace: 'on',
+
+    video: {
+      mode: 'retain-on-failure'
     },
-    use: {
-      video: {
-        mode: 'retain-on-failure'
-      },
-      screenshot: 'only-on-failure',
-      trace: 'retain-on-failure'
+
+    launchOptions: {
+      devtools: true,
+      slowMo: 500
     }
-  ,
-  globalSetup: './auth.setup.js',
-  use: {
-    storageState: 'storageState.json',
-  },
   },
 
   reporter: [['html', { open: 'never' }]],

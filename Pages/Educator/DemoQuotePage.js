@@ -25,7 +25,7 @@ export class DemoQuotePage {
   }
 
   async goto() {
-    await this.page.goto('https://qa.thrively.com/ng/#/classroom');
+    await this.page.goto('https://thrively-ssr.thrively.com/classroom');
   }
 
   async openScheduleDemo() {

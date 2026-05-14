@@ -1,11 +1,11 @@
 export const landerData = {
-  overview: 'https://qa.thrively.com/ng/#/overview',
-  whyThrively: 'https://qa.thrively.com/ng/#/why-thrively',
-  strengths: 'https://qa.thrively.com/ng/#/strengths',
-  wellbeing: 'https://qa.thrively.com/ng/#/wbi',
-  hope: 'https://qa.thrively.com/ng/#/hope',
-  agency: 'https://qa.thrively.com/ng/#/agency',
-  pricing: 'https://qa.thrively.com/ng/#/pricing'
+  overview: 'https://thrively-ssr.thrively.com/overview',
+  whyThrively: 'https://thrively-ssr.thrively.com/why-thrively',
+  strengths: 'https://thrively-ssr.thrively.com/strengths',
+  wellbeing: 'https://thrively-ssr.thrively.com/wbi',
+  hope: 'https://thrively-ssr.thrively.com/hope',
+  agency: 'https://thrively-ssr.thrively.com/agency',
+  pricing: 'https://thrively-ssr.thrively.com/pricing'
 };
 
 export const signupData = {

@@ -57,7 +57,7 @@ test.describe('Full Lander Pages Validation', () => {
     await expect(page.locator('learning-community-banner')).toContainText('Build a Thriving Learning Community');
 
     await lander.clickRole('link', 'Schedule a Call Today');
-    await expect(page).toHaveURL('https://qa.thrively.com/ng/#/contact?t=demo');
+    await expect(page).toHaveURL('https://thrively-ssr.thrively.com/contact?t=demo');
   });
 
   // =======================
@@ -103,7 +103,7 @@ test.describe('Full Lander Pages Validation', () => {
     await expect(page.locator('learning-community-banner')).toContainText('Build a Thriving Learning Community');
 
     await lander.clickRole('link', 'Schedule a Call Today');
-    await expect(page).toHaveURL('https://qa.thrively.com/ng/#/contact?t=demo');
+    await expect(page).toHaveURL('https://thrively-ssr.thrively.com/contact?t=demo');
     await page.goBack();
     await lander.navigate(landerData.wellbeing);
     await page.reload();
