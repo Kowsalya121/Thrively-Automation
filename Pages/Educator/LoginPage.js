@@ -1,3 +1,5 @@
+//import { loginPageUrl } from '../../test-data/testdata';
+
 export class LoginPage {
   constructor(page) {
     this.page = page;
@@ -21,7 +23,7 @@ export class LoginPage {
   }
 
   async goto() {
-    await this.page.goto('https://qa.thrively.com/ng/#/classroom');
+    await this.page.goto("https://qa.thrively.com/ng/#/classroom");
   }
 
   async openLogin() {

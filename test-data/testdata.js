@@ -204,22 +204,23 @@ export const signupData = {
     schoolSearch: 'pom'
   };
   export const Loginusers = {
-    /*educator: {
+    educator: {
       email: 'qa+kowsalya+test2@liftoffllc.com',
-      password: 'pass@121',
+      password: '123456',
       schoolName: 'GECK',
-      role: 'educator'
-    },*/
+      role: 'educator',
+      userId:'3254662'
+    },
     /*parent: {
       email: 'tybuzyny@mailinator.com',
       password: 'pass@121',
       role: 'parent'
     },*/
-    student: {
+    /*student: {
       email: '634238_ram',
       password: '123456',
       role: 'student'
-    }
+    }*/
   };
   
   export const childData = {
@@ -426,3 +427,11 @@ export const signupData = {
       }
     ]
   };
+
+/** Educator account used for the My Class / Add Student test flow */
+export const educatorUser = {
+  email: 'qy+kowsalya+test2@liftoffllc.com',
+  password: 'pass@121',
+  schoolName: 'GECK',
+  role: 'educator'
+};
