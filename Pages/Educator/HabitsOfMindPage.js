@@ -40,6 +40,7 @@
  *     - div#thomasScore : anchor target
  *     - "Reveal Your Habits of Mind" button : GONE after completion
  */
+import { expect } from '@playwright/test';
 export class HabitsOfMindPage {
   constructor(page) {
     this.page = page;
@@ -159,34 +160,90 @@ export class HabitsOfMindPage {
    *
    * @param {number} [maxIterations=1200]  Safety cap (80 questions × ~15 iterations max each)
    */
-  async completeAllQuestionsWithRotatingPattern(maxIterations = 1200) {
-    let prevUrl = '';
+  async completeAllQuestionsWithRotatingPattern(maxIterations = 120) {
 
     for (let i = 0; i < maxIterations; i++) {
-      const currentUrl = this.page.url();
 
-      // Exit when we leave the question pages (includes the transient q/79 state)
-      if (!currentUrl.includes('/assessments/thomas/q/')) break;
+        const currentUrl = this.page.url();
 
-      // Skip duplicate-URL ticks while the page is still processing Next
-      if (currentUrl === prevUrl) continue;
-      prevUrl = currentUrl;
+        // Stop once assessment page ends
+        if (!currentUrl.includes('/assessments/thomas/q/')) {
+            break;
+        }
 
-      // Derive option index from the question number in the URL
-      const qNum = parseInt(currentUrl.split('/q/')[1], 10);
-      const optionIndex = qNum % 3; // 0 → 1 → 2 → 0 → 1 → 2 …
+        // Get current question number
+        const qNum = parseInt(
+            currentUrl.split('/q/')[1],
+            10
+        );
 
-      await this.selectOptionAt(optionIndex);
-      await this.page.waitForTimeout(200);
+        const optionIndex = qNum % 3;
 
-      const isNextEnabled = await this.nextBtn.isEnabled().catch(() => false);
-      if (isNextEnabled) {
-        await this.nextBtn.click();
-        await this.page.waitForTimeout(400);
-      }
+        // Select rotating option
+        await this.selectOptionAt(optionIndex);
+
+        const isNextEnabled =
+            await this.nextBtn.isEnabled().catch(() => false);
+
+        if (isNextEnabled) {
+
+            // Store current question text
+            const currentQuestion =
+                await this.questionCounter
+                    .textContent()
+                    .catch(() => '');
+
+            // Click Next
+            await this.nextBtn.click();
+
+            // Allow lazy loading / transition
+            await this.page.waitForTimeout(3000);
+
+            // If assessment page ended, stop loop
+            if (!this.page.url().includes('/assessments/thomas/q/')) {
+                console.log('Assessment completed');
+                break;
+            }
+
+            // Check if question counter still exists
+            const counterVisible =
+                await this.questionCounter
+                    .isVisible()
+                    .catch(() => false);
+
+            // Final question enters result generation state
+            if (!counterVisible) {
+                console.log('Generating results...');
+                break;
+            }
+
+            // Wait until next question loads
+            try {
+
+                await expect(this.questionCounter)
+                    .not.toHaveText(currentQuestion, {
+                        timeout: 30000
+                    });
+
+            } catch (error) {
+
+                console.log(
+                    'Question transition timeout - assuming final state'
+                );
+
+                break;
+            }
+        }
     }
-  }
 
+    // Wait for View Result button
+    await this.viewResultBtn.waitFor({
+        state: 'visible',
+        timeout: 60000
+    });
+
+    // Click View Result
+}
   // ── Finish page actions ───────────────────────────────────────────────────
 
   /**

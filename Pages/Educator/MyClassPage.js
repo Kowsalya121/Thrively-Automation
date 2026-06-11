@@ -1,83 +1,66 @@
+import { stablePage } from '../../Utility/stablePage.js';
+
 export class MyClassPage {
   constructor(page) {
     this.page = page;
-
-    // Page header
-    this.myClassHeading = page.getByText('My Classes');
-
-    // Student list
-    this.studentList = page.locator('.add-manual-container, [class*="student"]');
-
-    // Add Students button (outside dialog)
-    this.addStudentsBtn = page.locator('button, [class*="btn"]').filter({ hasText: 'Add Students' }).first();
-
-    // Add Students modal
-    this.addStudentsModal    = page.locator('dialog, [role="dialog"]').last();
-    this.modalHeading        = page.getByRole('heading', { name: 'Add Students' });
-    this.addManuallyTab      = page.getByRole('tab', { name: 'Add Manually' });
-
-    // Form fields (first row)
-    this.firstNameInput  = page.locator('input[formcontrolname="firstName"]').first();
-    this.lastNameInput   = page.locator('input[formcontrolname="lastName"]').first();
-    this.usernameInput   = page.locator('input[formcontrolname="username"]').first();
-    this.gradeSelect     = page.locator('select[formcontrolname="grade"]').first();
-
-    // Modal action buttons
-    this.saveBtn   = page.getByRole('button', { name: 'Save' });
-    this.cancelBtn = page.getByRole('button', { name: 'Cancel' });
-
-    // Post-save confirmation
-    this.newStudentsAddedHeading = page.getByText('New Students Added');
-    this.schoolLoginUrl          = page.getByText('https://qa.thrively.com/ng/login/school/');
   }
 
-  /** Navigate directly to My Class (teacher-ID-agnostic via sidebar click). */
+  // ── Locators ─────────────────────────────────────────────────────────────
+
+  get myClassHeading()          { return this.page.getByText('My Classes'); }
+  get studentList()             { return this.page.locator('.add-manual-container, [class*="student"]'); }
+  get addStudentsBtn()          { return this.page.locator('button, [class*="btn"]').filter({ hasText: 'Add Students' }).first(); }
+  get addStudentsModal()        { return this.page.locator('dialog, [role="dialog"]').last(); }
+  get modalHeading()            { return this.page.getByRole('heading', { name: 'Add Students' }); }
+  get addManuallyTab()          { return this.page.getByRole('tab', { name: 'Add Manually' }); }
+  get firstNameInput()          { return this.page.locator('input[formcontrolname="firstName"]').first(); }
+  get lastNameInput()           { return this.page.locator('input[formcontrolname="lastName"]').first(); }
+  get usernameInput()           { return this.page.locator('input[formcontrolname="username"]').first(); }
+  get gradeSelect()             { return this.page.locator('select[formcontrolname="grade"]').first(); }
+  get saveBtn()                 { return this.page.getByRole('button', { name: 'Save' }); }
+  get cancelBtn()               { return this.page.getByRole('button', { name: 'Cancel' }); }
+  get newStudentsAddedHeading() { return this.page.getByText('New Students Added'); }
+  get schoolLoginUrl()          { return this.page.getByText('https://qa.thrively.com/ng/login/school/'); }
+
+  // ── Actions ──────────────────────────────────────────────────────────────
+
   async navigateViaMenu() {
+    await stablePage(this.page);
     await this.myClassHeading.click();
     await this.page.waitForURL(/\/my-class/);
+    await stablePage(this.page);
   }
 
-  /** Open the Add Students modal. */
   async openAddStudentsModal() {
+    await stablePage(this.page);
     await this.addStudentsBtn.click();
-    await this.modalHeading.waitFor({ state: 'visible' });
+    await this.modalHeading.waitFor({ state: 'visible', timeout: 15000 });
+    await stablePage(this.page);
   }
 
-  /** Select the "Add Manually" tab inside the modal. */
   async selectAddManuallyTab() {
     await this.addManuallyTab.click();
+    await stablePage(this.page);
   }
 
-  /**
-   * Fill one student row and save.
-   * @param {{ firstName: string, lastName: string, username: string, gradeIndex?: number }} student
-   */
   async addStudentManually({ firstName, lastName, username, gradeIndex = 3 }) {
     await this.firstNameInput.fill(firstName);
     await this.lastNameInput.fill(lastName);
     await this.usernameInput.fill(username);
-
     const gradeVisible = await this.gradeSelect.isVisible();
     if (gradeVisible) {
       await this.gradeSelect.selectOption({ index: gradeIndex });
     }
-
     await this.saveBtn.click();
+    await stablePage(this.page);
   }
 
-  /** Wait for the "New Students Added" confirmation panel. */
   async waitForSuccessConfirmation() {
-    await this.newStudentsAddedHeading.waitFor({ state: 'visible', timeout: 10000 });
+    await this.newStudentsAddedHeading.waitFor({ state: 'visible', timeout: 15000 });
   }
 
-  /**
-   * Return true when the given student name appears in the class listing.
-   * @param {string} lastName
-   * @param {string} firstName
-   */
   async isStudentInList(lastName, firstName) {
     const namePattern = `${lastName}, ${firstName}`;
-    const studentEntry = this.page.getByText(namePattern, { exact: false });
-    return studentEntry.isVisible();
+    return this.page.getByText(namePattern, { exact: false }).isVisible();
   }
 }

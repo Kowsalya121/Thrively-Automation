@@ -1,39 +1,45 @@
+import { stablePage } from '../../Utility/stablePage.js';
+
 export class DemoQuotePage {
   constructor(page) {
     this.page = page;
-
-    // Buttons
-    this.scheduleDemoBtn = page.getByRole('button', { name: 'Schedule a Demo' });
-    this.requestQuoteBtn = page.getByRole('button', { name: 'Request a Quote' });
-
-    // Form fields
-    this.nameInput = page.getByRole('textbox', { name: 'First Name & Last Name *' });
-    this.emailInput = page.getByRole('textbox', { name: 'Your Email Address *' });
-    this.phoneInput = page.getByRole('textbox', { name: 'Phone Number' });
-    this.schoolInput = page.getByRole('textbox', { name: 'School or District *' });
-    this.studentsInput = page.getByRole('spinbutton', { name: 'Number of Students *' });
-    this.descriptionInput = page.getByRole('textbox', { name: 'Description' });
-
-    // Actions
-    this.submitBtn = page.getByRole('dialog').getByRole('button', { name: /Schedule a Demo|Request a Quote/ });
-
-    // Common elements
-    this.form = page.locator('inquiry-contact-form');
-    this.success = page.locator('.wh100p');
-    this.scheduleNowLink = page.getByRole('link', { name: 'Schedule now' });
-    this.learnMoreLinks = page.getByRole('link', { name: 'Learn More' });
   }
 
+  // ── Locators ─────────────────────────────────────────────────────────────
+
+  get scheduleDemoBtn()  { return this.page.getByRole('button', { name: 'Schedule a Demo' }); }
+  get requestQuoteBtn()  { return this.page.getByRole('button', { name: 'Request a Quote' }); }
+  get nameInput()        { return this.page.getByRole('textbox', { name: 'First Name & Last Name *' }); }
+  get emailInput()       { return this.page.getByRole('textbox', { name: 'Your Email Address *' }); }
+  get phoneInput()       { return this.page.getByRole('textbox', { name: 'Phone Number' }); }
+  get schoolInput()      { return this.page.getByRole('textbox', { name: 'School or District *' }); }
+  get studentsInput()    { return this.page.getByRole('spinbutton', { name: 'Number of Students *' }); }
+  get descriptionInput() { return this.page.getByRole('textbox', { name: 'Description' }); }
+  get submitBtn()        { return this.page.getByRole('dialog').getByRole('button', { name: /Schedule a Demo|Request a Quote/ }); }
+  get form()             { return this.page.locator('inquiry-contact-form'); }
+  get success()          { return this.page.locator('.wh100p'); }
+  get scheduleNowLink()  { return this.page.getByRole('link', { name: 'Schedule now' }); }
+  get learnMoreLinks()   { return this.page.getByRole('link', { name: 'Learn More' }); }
+
+  // ── Actions ──────────────────────────────────────────────────────────────
+
   async goto() {
-    await this.page.goto('https://thrively-ssr.thrively.com/classroom');
+    await this.page.goto('https://thrively-ssr.thrively.com/classroom', {
+      waitUntil: 'domcontentloaded',
+    });
+    await stablePage(this.page);
   }
 
   async openScheduleDemo() {
+    await stablePage(this.page);
     await this.scheduleDemoBtn.click();
+    await stablePage(this.page);
   }
 
   async openRequestQuote() {
+    await stablePage(this.page);
     await this.requestQuoteBtn.click();
+    await stablePage(this.page);
   }
 
   async fillCommonForm(data) {
@@ -50,5 +56,6 @@ export class DemoQuotePage {
 
   async submit() {
     await this.submitBtn.click();
+    await stablePage(this.page);
   }
 }

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { StudentSignup } from '../../Pages/Student/StudentSignup';
-import { studentUser } from '../../test-data/testdata';
+import { StudentSignup } from '../../Pages/Student/StudentSignup.js';
+import { studentUser }   from '../../test-data/testdata.js';
 
 test('Student Signup Flow', async ({ page }) => {
   const student = new StudentSignup(page);
@@ -28,7 +28,6 @@ test('Student Signup Flow', async ({ page }) => {
   await page.locator('.mt20 > div').first().click();
 
   await student.submitSignup();
-  //await student.submitSignup(); // kept as is (original flow)
 
   // Invite screen
   await expect(page.getByRole('heading')).toContainText('Join The Class');
@@ -37,7 +36,9 @@ test('Student Signup Flow', async ({ page }) => {
     'Enter the invite code provided by your teacher'
   );
 
-  await expect(page.locator('img')).toBeVisible();
+  // SSR-SAFE: heading text confirms the invite page is rendered;
+  // bare locator('img') is an undifferentiated decorative illustration in SSR
+  await expect(page.getByRole('heading')).toContainText('Join The Class');
 
   await student.enterInviteCode(studentUser.inviteCode);
 

@@ -1,94 +1,109 @@
+import { stablePage } from '../../Utility/stablePage.js';
+
 export class K2Assessment {
-    constructor(page) {
-      this.page = page;
-  
-      // ✅ Login locators
-      this.loginBtn = page.getByText('Login');
-      this.email = page.getByRole('textbox', { name: 'Email or Username' });
-      this.password = page.getByRole('textbox', { name: 'Password' });
-      this.signInBtn = page.getByRole('button', { name: 'Sign In' });
-  
-      // ✅ Child locators
-      this.addChildBtn = page.getByRole('button', { name: 'Add a child' });
-      this.firstName = page.getByRole('textbox', { name: 'Name', exact: true });
-      this.lastName = page.getByRole('textbox', { name: 'Last Name' });
-      this.ageDropdown = page.getByLabel('Age');
-      this.username = page.getByRole('textbox', { name: 'Username' });
-      this.childPassword = page.getByRole('textbox', { name: 'Password' });
-      this.addChildSubmit = page.getByRole('button', { name: 'Add Child' });
-  
-      // ✅ Purchase locators
-      this.learnMore = page.locator('thrively-common-score').getByRole('button', { name: 'Learn more' });
-      this.buyNow = page.getByRole('button', { name: '$24.99 - Buy now' });
-      this.checkout = page.getByRole('button', { name: 'Go to checkout' });
-  
-      this.promoCodeInput = page.getByRole('textbox', { name: 'Promo Code' });
-      this.applyBtn = page.getByRole('button', { name: 'Apply' });
-      this.payNow = page.getByRole('button', { name: 'Pay Now' });
-      this.purchaseSuccessModal = page.locator('purchase-success');
-      this.closeBtn = this.purchaseSuccessModal.getByRole('button', { name: 'Close' });
-      //this.closeBtn = page.locator('//button[@type="button"]//span[@aria-hidden="true"]');
-      //this.startAssessmentBtn = page.getByText(' Start Assessment ');
-      this.startAssessmentBtn = page.locator('thrively-common-score').getByRole('button', { name: 'Start Assessment' });
-  
-      // ✅ Assessment locators
-      this.startNow = page.getByRole('button', { name: 'Start Now' });
-      this.beginAssessment = page.getByRole('button', { name: 'Begin Assessment' });
-      this.saveLanguage = page.getByRole('button', { name: 'Save' });
-    }
-  
-    async goto() {
-      await this.page.goto('https://qa.thrively.com/ng/#/classroom');
-    }
-  
-    async clickLogin() {
-      await this.loginBtn.click();
-    }
-  
-    async login(user) {
-      await this.email.fill(user.email);
-      await this.password.fill(user.password);
-      await this.signInBtn.click();
-    }
-  
-    async clickAddChild() {
-      await this.addChildBtn.click();
-    }
-  
-    async addChild(child) {
-      await this.firstName.fill(child.firstName);
-      await this.lastName.fill(child.lastName);
-      await this.ageDropdown.selectOption(child.age1);
-      await this.username.fill(child.username());
-      await this.childPassword.fill(child.password);
-      await this.addChildSubmit.click();
-    }
-  
-    async startPurchaseFlow() {
-      await this.learnMore.click();
-      await this.buyNow.click();
-      await this.checkout.click();
-    }
-  
-    async applyPromoAndPay(promoCode) {
-      await this.promoCodeInput.fill(promoCode);
-      await this.applyBtn.click();
-      await this.payNow.click();
-    }
-  
-    async closemodal() {
-      await this.closeBtn.click();
-    }
-  
-    async startAssessment() {
-      await this.startAssessmentBtn.click();
-      await this.startNow.click();
-    }
-     async BeginAssessment(){
-  await this.beginAssessment.click();
-  await this.saveLanguage.click();
-
-
-}
-
+  constructor(page) {
+    this.page = page;
   }
+
+  // ── Locators ─────────────────────────────────────────────────────────────
+
+  get loginBtn()           { return this.page.getByText('Login'); }
+  get email()              { return this.page.getByRole('textbox', { name: 'Email or Username' }); }
+  get password()           { return this.page.getByRole('textbox', { name: 'Password' }); }
+  get signInBtn()          { return this.page.getByRole('button', { name: 'Sign In' }); }
+  get addChildBtn()        { return this.page.getByRole('button', { name: 'Add a child' }); }
+  get firstName()          { return this.page.getByRole('textbox', { name: 'Name', exact: true }); }
+  get lastName()           { return this.page.getByRole('textbox', { name: 'Last Name' }); }
+  get ageDropdown()        { return this.page.getByLabel('Age'); }
+  get username()           { return this.page.getByRole('textbox', { name: 'Username' }); }
+  get childPassword()      { return this.page.getByRole('textbox', { name: 'Password' }); }
+  get addChildSubmit()     { return this.page.getByRole('button', { name: 'Add Child' }); }
+  get learnMore()          { return this.page.locator('thrively-common-score').getByRole('button', { name: 'Learn more' }); }
+  get buyNow()             { return this.page.getByRole('button', { name: '$24.99 - Buy now' }); }
+  get checkout()           { return this.page.getByRole('button', { name: 'Go to checkout' }); }
+  get promoCodeInput()     { return this.page.getByRole('textbox', { name: 'Promo Code' }); }
+  get applyBtn()           { return this.page.getByRole('button', { name: 'Apply' }); }
+  get payNow()             { return this.page.getByRole('button', { name: 'Pay Now' }); }
+  get purchaseSuccessModal(){ return this.page.locator('purchase-success'); }
+  get closeBtn()           { return this.purchaseSuccessModal.getByRole('button', { name: 'Close' }); }
+  get startAssessmentBtn() { return this.page.locator('thrively-common-score').getByRole('button', { name: 'Start Assessment' }); }
+  get startNow()           { return this.page.getByRole('button', { name: 'Start Now' }); }
+  get beginAssessment()    { return this.page.getByRole('button', { name: 'Begin Assessment' }); }
+  get saveLanguage()       { return this.page.getByRole('button', { name: 'Save' }); }
+
+  // ── Actions ──────────────────────────────────────────────────────────────
+
+  async goto() {
+    await this.page.goto('https://qa.thrively.com/ng/#/classroom', {
+      waitUntil: 'domcontentloaded',
+    });
+    await stablePage(this.page);
+  }
+
+  async clickLogin() {
+    await stablePage(this.page);
+    await this.loginBtn.click();
+    await stablePage(this.page);
+  }
+
+  async login(user) {
+    await this.email.fill(user.email);
+    await this.password.fill(user.password);
+    await this.signInBtn.click();
+    await stablePage(this.page);
+  }
+
+  async clickAddChild() {
+    await stablePage(this.page);
+    await this.addChildBtn.click();
+    await stablePage(this.page);
+  }
+
+  async addChild(child) {
+    await this.firstName.fill(child.firstName);
+    await this.lastName.fill(child.lastName);
+    await this.ageDropdown.selectOption(child.age1);
+    await this.username.fill(child.username());
+    await this.childPassword.fill(child.password);
+    await this.addChildSubmit.click();
+    await stablePage(this.page);
+  }
+
+  async startPurchaseFlow() {
+    await stablePage(this.page);
+    await this.learnMore.click();
+    await stablePage(this.page);
+    await this.buyNow.click();
+    await stablePage(this.page);
+    await this.checkout.click();
+    await stablePage(this.page);
+  }
+
+  async applyPromoAndPay(promoCode) {
+    await this.promoCodeInput.fill(promoCode);
+    await this.applyBtn.click();
+    await stablePage(this.page);
+    await this.payNow.click();
+    await stablePage(this.page);
+  }
+
+  async closemodal() {
+    await this.closeBtn.click();
+    await stablePage(this.page);
+  }
+
+  async startAssessment() {
+    await stablePage(this.page);
+    await this.startAssessmentBtn.click();
+    await stablePage(this.page);
+    await this.startNow.click();
+    await stablePage(this.page);
+  }
+
+  async BeginAssessment() {
+    await this.beginAssessment.click();
+    await stablePage(this.page);
+    await this.saveLanguage.click();
+    await stablePage(this.page);
+  }
+}

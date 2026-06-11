@@ -1,57 +1,70 @@
+import { stablePage } from '../../Utility/stablePage.js';
+
 export class CheckInPage {
   constructor(page) {
     this.page = page;
-
-    // ===== LOGIN =====
-    this.loginText = page.getByText('Login');
-    this.usernameInput = page.getByRole('textbox', { name: 'Email or Username' });
-    this.passwordInput = page.getByRole('textbox', { name: 'Password' });
-    this.signInBtn = page.getByRole('button', { name: 'Sign In' });
-
-    // ===== HOPE SECTION =====
-    this.hopeMenu = page.locator("xpath=//span[text()= ' Hope ']/..");
-    this.hopeSection = page.locator('#hopeSection');
-    this.takeSurveyBtn = page.getByRole('button', { name: 'Take Hope Survey' });
-    //this.HopeVideo = page.locator('#hopeSection > empty-state-action-card > .empty-state > .flex-v-center > .min-w255 > div > .vdo-overlay').click();
-    //this.closevideo =page.locator('xpath=//span[@class="vdo-close blk"]');
-
-    // ===== VIDEO =====
-    this.youtubeFrame = page.locator('iframe[title="YouTube video player"]');
-    this.hopeVideoFrame = page.locator('iframe[title="Hope for Staff"]');
-
-    // ===== SURVEY =====
-    this.startBtn = page.getByRole('button', { name: 'Start' });
-    this.question = page.locator('thrively-step');
-    this.slider = page.getByRole('slider');
-    this.nextBtn = page.getByRole('button', { name: 'Next' });
-    this.backBtn = page.getByRole('button', { name: 'Back' });
-    this.finishBtn = page.getByRole('button', { name: 'Finish' });
-
-    // ===== TEXT AREA =====
-    this.richTextFrame = page.locator('iframe[title="Rich Text Area"]');
-
-    // ===== RESULT =====
-    this.hopeAssessment = page.locator('hope-assessment');
-    this.doneBtn = page.getByRole('button', { name: 'Done' });
   }
 
+  // ── Locators ─────────────────────────────────────────────────────────────
+
+  get loginText()      { return this.page.getByText('Login'); }
+  get usernameInput()  { return this.page.getByRole('textbox', { name: 'Email or Username' }); }
+  get passwordInput()  { return this.page.getByRole('textbox', { name: 'Password' }); }
+  get signInBtn()      { return this.page.getByRole('button', { name: 'Sign In' }); }
+
+  // Hope section
+  get hopeMenu()       { return this.page.locator("xpath=//span[text()= ' Hope ']/..");}
+  get hopeSection()    { return this.page.locator('#hopeSection'); }
+  get takeSurveyBtn()  { return this.page.getByRole('button', { name: 'Take Hope Survey' }); }
+
+  // Video
+  get youtubeFrame()   { return this.page.locator('iframe[title="YouTube video player"]'); }
+  get hopeVideoFrame() { return this.page.locator('iframe[title="Hope for Staff"]'); }
+
+  // Survey
+  get startBtn()       { return this.page.getByRole('button', { name: 'Start' }); }
+  get question()       { return this.page.locator('thrively-step'); }
+  get slider()         { return this.page.getByRole('slider'); }
+  get nextBtn()        { return this.page.getByRole('button', { name: 'Next' }); }
+  get backBtn()        { return this.page.getByRole('button', { name: 'Back' }); }
+  get finishBtn()      { return this.page.getByRole('button', { name: 'Finish' }); }
+
+  // Text area
+  get richTextFrame()  { return this.page.locator('iframe[title="Rich Text Area"]'); }
+
+  // Result
+  get hopeAssessment() { return this.page.locator('hope-assessment'); }
+  get doneBtn()        { return this.page.getByRole('button', { name: 'Done' }); }
+
+  // ── Actions ──────────────────────────────────────────────────────────────
+
   async goto() {
-    await this.page.goto('https://qa.thrively.com/ng/#/classroom');
+    await this.page.goto('https://qa.thrively.com/ng/#/classroom', {
+      waitUntil: 'domcontentloaded',
+    });
+    await stablePage(this.page);
   }
 
   async login(user) {
+    await stablePage(this.page);
     await this.loginText.click();
+    await stablePage(this.page);
     await this.usernameInput.fill(user.email);
     await this.passwordInput.fill(user.password);
     await this.signInBtn.click();
+    await stablePage(this.page);
   }
 
   async openHopeTab() {
+    await stablePage(this.page);
     await this.hopeMenu.click();
+    await stablePage(this.page);
   }
 
   async clickTakeSurvey() {
+    await stablePage(this.page);
     await this.takeSurveyBtn.click();
+    await stablePage(this.page);
   }
 
   async playVideo() {
@@ -62,24 +75,32 @@ export class CheckInPage {
   }
 
   async getVideoTitleText() {
-    return await this.hopeVideoFrame.contentFrame().locator('embedded-player-video-details').textContent();
+    return this.hopeVideoFrame
+      .contentFrame()
+      .locator('embedded-player-video-details')
+      .textContent();
   }
 
   async clickStart() {
+    await stablePage(this.page);
     await this.startBtn.click();
-  } 
+    await stablePage(this.page);
+  }
 
   async answer(value) {
     await this.slider.fill(value);
     await this.nextBtn.click();
+    await stablePage(this.page);
   }
 
   async goBack() {
     await this.backBtn.click();
+    await stablePage(this.page);
   }
 
   async clickFinish() {
     await this.finishBtn.click();
+    await stablePage(this.page);
   }
 
   async enterReflection(text) {
@@ -89,13 +110,14 @@ export class CheckInPage {
 
   async clickDone() {
     await this.doneBtn.click();
-  }
-  async clickHopeVideo(){
-    await this.page.locator('#hopeSection > empty-state-action-card > .empty-state > .flex-v-center > .min-w255 > div > .vdo-overlay').click(); 
-  }
-  async closeVideoModal() {
-    await this.closevideo.click();
+    await stablePage(this.page);
   }
 
+  async clickHopeVideo() {
+    await this.page
+      .locator(
+        '#hopeSection > empty-state-action-card > .empty-state > .flex-v-center > .min-w255 > div > .vdo-overlay'
+      )
+      .click();
+  }
 }
-

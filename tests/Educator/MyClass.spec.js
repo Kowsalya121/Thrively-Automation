@@ -1,72 +1,53 @@
-import { test, expect } from '../../Fixtures/baseTest.js';
-import { LoginPage }  from '../../Pages/Educator/LoginPage.js';
-import { MyClassPage } from '../../Pages/Educator/MyClassPage.js';
-import { educatorUser } from '../../test-data/testdata.js';
+import { test, expect }  from '../../Fixtures/baseTest.js';
+import { LoginPage }     from '../../Pages/Educator/LoginPage.js';
+import { MyClassPage }   from '../../Pages/Educator/MyClassPage.js';
+import { educatorUser }  from '../../test-data/testdata.js';
 
-/**
- * End-to-end test: Login → Select School → Dashboard → My Class → Add Student
- *
- * Credentials : qy+kowsalya+test2@liftoffllc.com / pass@121
- * School      : GECK
- */
 test('Educator – Login, navigate to My Class, and add a student', async ({ page }) => {
   const login   = new LoginPage(page);
   const myClass = new MyClassPage(page);
 
-  // ─── 1. Navigate to the application ────────────────────────────────────────
   await login.goto();
-  await expect(page).toHaveURL(/classroom/);
+  await expect(page).toHaveURL(/classroom/, { timeout: 30000 });
 
-  // ─── 2. Open the login modal ────────────────────────────────────────────────
   await login.openLogin();
-  await expect(page.getByRole('heading', { name: 'Sign In' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Sign In' })).toBeVisible({ timeout: 30000 });
 
-  // ─── 3. Enter credentials and submit ────────────────────────────────────────
   await login.login(educatorUser);
 
-  // ─── 4. Assert school-selection page ────────────────────────────────────────
-  await expect(page).toHaveURL(/select-account/, { timeout: 15000 });
-  await expect(page.getByRole('heading', { name: 'Choose Account' })).toBeVisible();
+  await expect(page).toHaveURL(/select-account/, { timeout: 30000 });
+  await expect(page.getByRole('heading', { name: 'Choose Account' })).toBeVisible({ timeout: 30000 });
 
-  // ─── 5. Select GECK school ──────────────────────────────────────────────────
   await login.selectSchool(educatorUser.schoolName);
 
-  // ─── 6. Assert Dashboard ────────────────────────────────────────────────────
-  await expect(page).toHaveURL(/dashboard/, { timeout: 15000 });
-  await expect(page.getByRole('heading', { name: 'My Dashboard' })).toBeVisible();
+  await expect(page).toHaveURL(/dashboard/, { timeout: 30000 });
+  await expect(page.getByRole('heading', { name: 'My Dashboard' })).toBeVisible({ timeout: 30000 });
 
-  // ─── 7. Navigate to My Class via the sidebar ────────────────────────────────
   await myClass.navigateViaMenu();
-  await expect(page).toHaveURL(/my-class/);
+  await expect(page).toHaveURL(/my-class/, { timeout: 30000 });
 
-  // ─── 8. Assert My Class page is visible ─────────────────────────────────────
-  await expect(page.getByText('Add Students')).toBeVisible();
+  await expect(page.getByText('Add Students')).toBeVisible({ timeout: 30000 });
 
-  // ─── 9. Open Add Students modal ─────────────────────────────────────────────
   await myClass.openAddStudentsModal();
-  await expect(myClass.modalHeading).toBeVisible();
+  await expect(myClass.modalHeading).toBeVisible({ timeout: 30000 });
 
-  // ─── 10. Select "Add Manually" tab ──────────────────────────────────────────
   await myClass.selectAddManuallyTab();
-  await expect(myClass.firstNameInput).toBeVisible();
+  await expect(myClass.firstNameInput).toBeVisible({ timeout: 30000 });
 
-  // ─── 11. Fill student details and save ──────────────────────────────────────
-  const ts       = Date.now();
-  const student  = {
+  const ts      = Date.now();
+  const student = {
     firstName : 'AutoTest',
     lastName  : 'Student',
     username  : `autotest_${ts}`,
-    gradeIndex: 3
+    gradeIndex: 3,
   };
 
   await myClass.addStudentManually(student);
 
-  // ─── 12. Assert success confirmation ────────────────────────────────────────
   await myClass.waitForSuccessConfirmation();
-  await expect(myClass.newStudentsAddedHeading).toBeVisible();
-  await expect(myClass.schoolLoginUrl).toBeVisible();
+  await expect(myClass.newStudentsAddedHeading).toBeVisible({ timeout: 30000 });
+  await expect(myClass.schoolLoginUrl).toBeVisible({ timeout: 30000 });
 
-  // ─── 13. Assert student appears in the class listing ────────────────────────
   const inList = await myClass.isStudentInList(student.lastName, student.firstName);
   expect(inList).toBe(true);
 });

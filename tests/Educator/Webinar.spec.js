@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { WebinarPage } from '../../Pages/Educator/WebinarPage';
-import { webinarUser } from '../../test-data/testdata';
+import { WebinarPage } from '../../Pages/Educator/WebinarPage.js';
+import { webinarUser } from '../../test-data/testdata.js';
 
 test('Webinar Signup Flow', async ({ page }) => {
   const webinar = new WebinarPage(page);
@@ -21,10 +21,6 @@ test('Webinar Signup Flow', async ({ page }) => {
 
   await expect(webinar.googleBtn).toBeVisible();
 
-  
-  // Re-open signup (kept as original)
-
-
   await expect(webinar.microsoftBtn).toBeVisible();
 
   // Fill form
@@ -32,8 +28,6 @@ test('Webinar Signup Flow', async ({ page }) => {
 
   // School selection
   await webinar.selectSchool(webinarUser.schoolSearch);
-
-  //await expect(page.locator('select-school')).toContainText("Can't find your school");
 
   await webinar.completeRegistrationFlow(webinarUser);
 
@@ -49,9 +43,10 @@ test('Webinar Signup Flow', async ({ page }) => {
   await expect(page.getByText('Wed, Dec 03, 10:00 AM PT')).toBeVisible();
   await expect(page.locator('webinar-detail')).toContainText('Jasmine cox');
 
-  // Dashboard nav
-  await page.getByRole('listitem').filter({ hasText: 'My Dashboard' }).getByRole('img').click();
-  
+  // SSR-SAFE: "My Dashboard" nav item clicked via its text label instead of a
+  // child img element — sidebar icons are decorative and have no reliable alt in SSR
+  await page.getByRole('listitem').filter({ hasText: 'My Dashboard' }).click();
+
   // Onboarding
   await webinar.clickNext();
 

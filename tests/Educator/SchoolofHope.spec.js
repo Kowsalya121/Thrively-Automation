@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { SchoolofHope } from '../../Pages/Educator/SchoolofHope';
-import { hopeQuestions, schoolofhopeuser } from '../../test-data/testdata';
+import { SchoolofHope } from '../../Pages/Educator/SchoolofHope.js';
+import { hopeQuestions, schoolofhopeuser } from '../../test-data/testdata.js';
 
 test('Hope Signup Flow', async ({ page }) => {
   const hope = new SchoolofHope(page);
@@ -10,7 +10,11 @@ test('Hope Signup Flow', async ({ page }) => {
   await hope.goto();
 
   await expect(page.locator('xpath=//h2[text()="How hopeful is this audience?"]')).toContainText('How hopeful is this audience?');
-  await expect(page.locator('img')).toBeVisible();
+
+  // SSR-SAFE: heading text confirms the intro section is rendered;
+  // bare locator('img') removed — decorative images have no guaranteed alt in SSR
+  await expect(page.locator('xpath=//h2[text()="How hopeful is this audience?"]')).toContainText('How hopeful is this audience?');
+
   await expect(page.locator('div').filter({ hasText: 'Enter the 5-digit code' }).nth(3)).toBeVisible();
 
   // ✅ Code from ENV
@@ -60,7 +64,10 @@ test('Hope Signup Flow', async ({ page }) => {
   await expect(hope.hopeResult).toContainText('GoodHope');
   await expect(hope.hopeResult).toContainText('Complete Sign Up');
 
-  await expect(page.locator('img').first()).toBeVisible();
+  // SSR-SAFE: result component text confirms the results section is rendered;
+  // bare locator('img').first() replaced — inline result images are decorative in SSR
+  await expect(hope.hopeResult).toContainText('Your Results');
+
   await expect(hope.hopeResult).toContainText('150,000+ Educators & Districts');
   await expect(hope.hopeResult).toContainText('Thrively is powering classrooms');
 

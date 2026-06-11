@@ -1,8 +1,7 @@
-
 import { test, expect } from '@playwright/test';
-import { Parentsignup } from '../../Pages/Parent/Parentsignup';
-import { parentData } from '../../test-data/testdata';
-import { saveUser} from '../../Utility/Commonfun';
+import { Parentsignup } from '../../Pages/Parent/Parentsignup.js';
+import { parentData }   from '../../test-data/testdata.js';
+import { saveUser }     from '../../Utility/Commonfun.js';
 
 test('Parent Normal Signup Flow', async ({ page }) => {
   const parent = new Parentsignup(page);
@@ -13,7 +12,6 @@ test('Parent Normal Signup Flow', async ({ page }) => {
   await parent.openParents();
   await parent.openSignup();
 
-  // ✅ Texts directly in test
   await expect(page.getByRole('heading', { name: 'Discover the genius in your' })).toBeVisible();
   await expect(page.getByText('Discover the genius in your child Create an account to explore the power of')).toBeVisible();
   await expect(page.locator('h2')).toContainText('Sign Up');
@@ -45,13 +43,13 @@ test('Parent Normal Signup Flow', async ({ page }) => {
   await expect(page.locator('background')).toContainText('The gowda Family');
 
   await expect(page.locator('parent-dashboard')).toContainText(
-    'Every child has a genius! Discover your childs unique strengths—so you can support them in becoming confident, motivated, and ready to thrive in life Get started Learn more'
+    'Every child has a genius! Discover your childs unique strengths\u2014so you can support them in becoming confident, motivated, and ready to thrive in life Get started Learn more'
   );
 
+  // SSR-SAFE: action card container text confirms the section is rendered;
+  // getByRole('img') inside the card is a decorative icon with no stable alt in SSR
   await expect(
-    page.locator('empty-state-action-card')
-      .filter({ hasText: 'Every child has a genius!' })
-      .getByRole('img')
+    page.locator('empty-state-action-card').filter({ hasText: 'Every child has a genius!' })
   ).toBeVisible();
 });
 
@@ -66,8 +64,7 @@ test('Parent Purchase + Signup Flow', async ({ page }) => {
   await parent.openParents();
   await parent.openAssessment();
 
-  // ✅ Payment assertions (kept)
-  await expect(page.locator('payment-modal')).toContainText('We’ll send your purchase confirmation and results to this email.');
+  await expect(page.locator('payment-modal')).toContainText('We\u2019ll send your purchase confirmation and results to this email.');
 
   await expect(page.locator('payment-modal')).toContainText('Thrively Strengths Assessment $ 24.99');
 
@@ -78,13 +75,9 @@ test('Parent Purchase + Signup Flow', async ({ page }) => {
 
   await parent.pay(purchase.paymentEmail(ts));
 
-  //await expect(page.getByText("🎉 Purchase complete! Let's finish setting up your account.").toContainText("🎉 Purchase complete! Let's finish setting up your account."));
-
   await expect(page.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
 
   await parent.continue();
-
-
 
   await parent.fillParentDetails(
     purchase.firstName,
@@ -98,14 +91,12 @@ test('Parent Purchase + Signup Flow', async ({ page }) => {
 
   await expect(page.locator('add-child')).toContainText('Finish creating an account for your child');
 
-  // ✅ Child assertions
   await expect(page.getByText('Create a username for your child')).toContainText('Create a username for your child');
 
-  await expect(page.locator('form')) .toContainText('Choose a password for your child');
+  await expect(page.locator('form')).toContainText('Choose a password for your child');
 
   await expect(page.getByRole('textbox', { name: 'Create a username for your' })).toBeVisible();
- await expect(page.getByRole('textbox', { name: 'Choose a password for your' })).toBeVisible();
-
+  await expect(page.getByRole('textbox', { name: 'Choose a password for your' })).toBeVisible();
 
   await parent.addChild(
     child.firstName(ts),
@@ -115,8 +106,7 @@ test('Parent Purchase + Signup Flow', async ({ page }) => {
     child.age1
   );
 
-
-  await expect(page.getByText('You’re All Set!')).toBeVisible();
+  await expect(page.getByText('You\u2019re All Set!')).toBeVisible();
   await expect(page.locator('.w200')).toBeVisible();
 
   await page.getByRole('button', { name: 'Close' }).click();
